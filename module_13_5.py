@@ -10,8 +10,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 kb = ReplyKeyboardMarkup()
 button1 = KeyboardButton(text='Рассчитать')
 button2 = KeyboardButton(text='Информация')
-kb.add(button1)
-kb.add(button2)
+kb.row(button1, button2)
 
 
 @dp.message_handler(commands=['start'])
@@ -49,7 +48,7 @@ async def send_calories(message, state):
 async def send_calories(message, state):
     await state.update_data(weight=message.text)
     data = await state.get_data()
-    result = (10 * int(data['age']) + 6.25 * int(data['growth']) - 5 * int(data['weight']) + 5) * 1.55
+    result = (10 * int(data['age']) + 6.25 * int(data['growth']) - 5 * int(data['weight']) + 5) + 5
     await message.answer(f'Ваша норма калорий:{result}')
     await state.finish()
 
